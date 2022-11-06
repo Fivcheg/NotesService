@@ -71,25 +71,52 @@ object NotesService {
         return false
     }
 
-    fun noteGet(userId: Int, offset: String, count: Int, sort: Boolean): Any{
+    //Тут вроде ок
+    fun noteGet(userId: Int, count: Int, sort: Boolean): Any {
         var noteTemp = mutableListOf<Note>()
         var itemCount = 0
-        for (item in notes){
-            if (item.userId == userId && itemCount < count){
+        for (item in notes) {
+            if (item.userId == userId && !item.deleted && itemCount < count) {
                 noteTemp += item
                 itemCount++
             }
             //(false — по дате создания в порядке убывания, true - по дате создания в порядке возрастания).
-            if (!sort){
+            if (!sort) {
                 noteTemp.sortByDescending { it.date }
             } else {
                 noteTemp.sortBy { it.date }
             }
-
         }
-    return noteTemp
+        return noteTemp
     }
 
+    //Тут вроде ок
+    fun noteGetById(noteId: Int): Any {
+        var noteTemp = mutableListOf<Note>()
+        for (item in notes) {
+            if (item.id == noteId && !item.deleted) {
+                noteTemp += item
+            }
+        }
+        return noteTemp
+    }
 
+    fun commentsGet(noteId: Int, ownerId: Int, sort: Boolean, count: Int): Any {
+        var commentTemp = mutableListOf<Comment>()
+        var itemCount = 0
+        for (item in comments) {
+            if (item.noteId == noteId && !item.deleted && !notes[noteId].deleted && itemCount < count) {
+                commentTemp += item
+                itemCount++
+            }
+            //(false — по дате создания в порядке убывания, true - по дате создания в порядке возрастания).
+            if (!sort) {
+                commentTemp .sortByDescending { it.date }
+            } else {
+                commentTemp .sortBy { it.date }
+            }
+        }
+        return commentTemp
+    }
 }
 

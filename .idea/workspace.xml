@@ -4,11 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="327f5fe6-4a09-44bb-ba5c-6230f0933ff1" name="Changes" comment="Edit all fun notesAdd, createComment, notesDelete; added commentDelete">
+    <list default="true" id="327f5fe6-4a09-44bb-ba5c-6230f0933ff1" name="Changes" comment="Add fun notesEdit, commentsEdit, noteGet">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/Comment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Comment.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/Main.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Main.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/Note.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Note.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/NotesService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/NotesService.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -98,7 +96,14 @@
       <option name="project" value="LOCAL" />
       <updated>1667743558472</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Add fun notesEdit, commentsEdit, noteGet">
+      <created>1667753029847</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1667753029847</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -117,6 +122,7 @@
     <MESSAGE value="Add data-classes Notes, Comment" />
     <MESSAGE value="Add fun addNote, createComment, notesDelete" />
     <MESSAGE value="Edit all fun notesAdd, createComment, notesDelete; added commentDelete" />
-    <option name="LAST_COMMIT_MESSAGE" value="Edit all fun notesAdd, createComment, notesDelete; added commentDelete" />
+    <MESSAGE value="Add fun notesEdit, commentsEdit, noteGet" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add fun notesEdit, commentsEdit, noteGet" />
   </component>
 </project>

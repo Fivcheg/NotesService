@@ -33,5 +33,7 @@ fun main() {
       notesEdit(2, "sadsada", "r3v3,", 2, 3)
       println("-----")
       for (item in notes) println(item)*/
-    println(noteGet(130, "sadasdas", 2, true))
+    println(noteGet(130, 5, true))
+    println(NotesService.noteGetById(1))
+    println(NotesService.commentsGet(2, 5, true, 5))
 }
