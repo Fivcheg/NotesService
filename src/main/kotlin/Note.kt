@@ -5,6 +5,7 @@ data class Note(
     val title: String,
     val text: String,
     val privacy: Int,
+    val commentPrivacy: Int,
     val comment: Comment?,
     val deleted: Boolean
 )

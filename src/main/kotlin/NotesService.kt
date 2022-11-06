@@ -3,7 +3,7 @@ import java.util.*
 import javax.crypto.KeyGenerator
 
 object NotesService {
-    var commentId = 0
+    private var commentId = 0
     var notes = mutableListOf<Note>()  //TODO PRIVATE / OPEN FOR TESTING
     var comments = mutableListOf<Comment>() //TODO PRIVATE / OPEN FOR TESTING
 
@@ -18,7 +18,7 @@ object NotesService {
     }
 
     //Тут вроде ок
-    fun createComment(postId: Int, comment: Comment): Boolean {
+    fun commentCreate(postId: Int, comment: Comment): Boolean {
         val secretKey = KeyGenerator.getInstance("AES").generateKey()
         val encodedKey: String = Base64.getEncoder().encodeToString(secretKey.encoded)
         if (!notes[postId].deleted) {
@@ -51,10 +51,45 @@ object NotesService {
         return false
     }
 
+    //Тут вроде ок
+    fun notesEdit(noteId: Int, title: String, text: String, privacy: Int, commentPrivacy: Int): Boolean {
+        if (!notes[noteId].deleted) {
+            notes += notes[noteId].copy(title = title, text = text, privacy = privacy, commentPrivacy = commentPrivacy)
+            notes.removeAt(noteId)
+            return true
+        }
+        return false
+    }
+
+    //Тут вроде ок
+    fun commentsEdit(commentId: Int, ownerId: Int, message: String): Boolean {
+        if (!comments[commentId].deleted && !notes[comments[commentId].noteId].deleted) {
+            comments += comments[commentId].copy(ownerId = ownerId, message = message)
+            comments.removeAt(commentId)
+            return true
+        }
+        return false
+    }
+
+    fun noteGet(userId: Int, offset: String, count: Int, sort: Boolean): Any{
+        var noteTemp = mutableListOf<Note>()
+        var itemCount = 0
+        for (item in notes){
+            if (item.userId == userId && itemCount < count){
+                noteTemp += item
+                itemCount++
+            }
+            //(false — по дате создания в порядке убывания, true - по дате создания в порядке возрастания).
+            if (!sort){
+                noteTemp.sortByDescending { it.date }
+            } else {
+                noteTemp.sortBy { it.date }
+            }
+
+        }
+    return noteTemp
+    }
 
 
-    /* fun getById(noteId: Int): Note? {
-        return notes.firstOrNull { it.id == noteId }
-    }*/
 }
 

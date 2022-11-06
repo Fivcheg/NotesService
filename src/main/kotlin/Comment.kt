@@ -5,7 +5,6 @@ data class Comment(
     val userId: Int,
     val ownerId: Int,
     val replyTo: Int,
-    val commentPrivacy: Int,
     val message: String,
     val quid: String,
     val deleted: Boolean
