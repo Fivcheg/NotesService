@@ -1,4 +1,3 @@
-
 data class Note(
     val id: Int,
     val date: Long,
@@ -7,6 +6,5 @@ data class Note(
     val text: String,
     val privacy: Int,
     val comment: Comment?,
-    val deleted: Boolean,
-    var comments: MutableSet<Comment>? = mutableSetOf()
+    val deleted: Boolean
 )

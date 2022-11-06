@@ -1,45 +1,60 @@
+
 import java.util.*
 import javax.crypto.KeyGenerator
 
 object NotesService {
+    var commentId = 0
     var notes = mutableListOf<Note>()  //TODO PRIVATE / OPEN FOR TESTING
+    var comments = mutableListOf<Comment>() //TODO PRIVATE / OPEN FOR TESTING
 
-
-    fun addNote(note: Note): Int {
+    //Тут вроде ок
+    fun notesAdd(note: Note): Int {
         val newId = notes.size + 1
         notes += note.copy(id = newId)
-        return newId
+        if (newId == notes.last().id) {
+            return notes.last().id
+        }
+        return 0
     }
 
-    fun createComment(postId: Int, comment: Comment): Int {
-        var commentTemp: MutableSet<Comment> = mutableSetOf()
+    //Тут вроде ок
+    fun createComment(postId: Int, comment: Comment): Boolean {
         val secretKey = KeyGenerator.getInstance("AES").generateKey()
         val encodedKey: String = Base64.getEncoder().encodeToString(secretKey.encoded)
-        //var commentId = 0
-        val note = getNoteById(postId)
-        if (getNoteById(postId) != null) {
-            commentTemp += comment.copy(quid = encodedKey)
-            if (note != null) {
-                notes += note.copy(comments = commentTemp)    // не могу понять как работать с Set'om в List'e, не копируя запись, а добавляя в Set новое значение
+        if (!notes[postId].deleted) {
+            commentId = comments.size
+            comments += comment.copy(id = ++commentId, noteId = postId, quid = encodedKey)
+            if (commentId == comments.last().id) {
+                return true
             }
         }
-        return 1
+        return false
     }
 
-    fun notesDelete(noteId: Int): Boolean{
-        var x = false
-        if (getNoteById(noteId) != null && !getNoteById(noteId)!!.deleted) {
-            notes += getNoteById(noteId)!!.copy(deleted = true)
-            x = true
+    //Тут вроде ок
+    fun notesDelete(noteId: Int): Boolean {
+        if (!notes[noteId].deleted) {
+            notes += notes[noteId].copy(deleted = true)
+            notes.removeAt(notes.lastIndex - 1)
+            return true
         }
-        return x
+        return false
     }
 
-    fun getById(noteId: Int): Note? {
-        return notes.firstOrNull { it.id == noteId }
+    //Тут вроде ок
+    fun commentDelete(commentId: Int): Boolean {
+        if (!comments[commentId].deleted && !notes[comments[commentId].noteId].deleted) {
+            comments += comments[commentId].copy(deleted = true)
+            comments.removeAt(notes.lastIndex - 1)
+            return true
+        }
+        return false
     }
 
-    private fun getNoteById(noteId: Int): Note?{
+
+
+    /* fun getById(noteId: Int): Note? {
         return notes.firstOrNull { it.id == noteId }
-    }
+    }*/
 }
+
