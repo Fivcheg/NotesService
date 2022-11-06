@@ -1,15 +1,13 @@
-
+package ru.netology
 import java.util.*
 import javax.crypto.KeyGenerator
 
 object NotesService {
-    private var commentId = 0
     var notes = mutableListOf<Note>()  //TODO PRIVATE / OPEN FOR TESTING
     var comments = mutableListOf<Comment>() //TODO PRIVATE / OPEN FOR TESTING
 
-    //Тут вроде ок
     fun notesAdd(note: Note): Int {
-        val newId = notes.size + 1
+        var newId = notes.size
         notes += note.copy(id = newId)
         if (newId == notes.last().id) {
             return notes.last().id
@@ -17,13 +15,12 @@ object NotesService {
         return 0
     }
 
-    //Тут вроде ок
-    fun commentCreate(postId: Int, comment: Comment): Boolean {
+    fun commentsCreate(postId: Int, comment: Comment): Boolean {
         val secretKey = KeyGenerator.getInstance("AES").generateKey()
         val encodedKey: String = Base64.getEncoder().encodeToString(secretKey.encoded)
         if (!notes[postId].deleted) {
-            commentId = comments.size
-            comments += comment.copy(id = ++commentId, noteId = postId, quid = encodedKey)
+            var commentId = comments.size
+            comments += comment.copy(id = commentId++, noteId = postId, quid = encodedKey)
             if (commentId == comments.last().id) {
                 return true
             }
@@ -31,27 +28,24 @@ object NotesService {
         return false
     }
 
-    //Тут вроде ок
     fun notesDelete(noteId: Int): Boolean {
         if (!notes[noteId].deleted) {
             notes += notes[noteId].copy(deleted = true)
-            notes.removeAt(notes.lastIndex - 1)
+            notes.removeAt(notes[noteId].id)
             return true
         }
         return false
     }
 
-    //Тут вроде ок
-    fun commentDelete(commentId: Int): Boolean {
+    fun commentsDelete(commentId: Int): Boolean {
         if (!comments[commentId].deleted && !notes[comments[commentId].noteId].deleted) {
             comments += comments[commentId].copy(deleted = true)
-            comments.removeAt(notes.lastIndex - 1)
+            comments.removeAt(comments[commentId].id)
             return true
         }
         return false
     }
 
-    //Тут вроде ок
     fun notesEdit(noteId: Int, title: String, text: String, privacy: Int, commentPrivacy: Int): Boolean {
         if (!notes[noteId].deleted) {
             notes += notes[noteId].copy(title = title, text = text, privacy = privacy, commentPrivacy = commentPrivacy)
@@ -61,7 +55,6 @@ object NotesService {
         return false
     }
 
-    //Тут вроде ок
     fun commentsEdit(commentId: Int, ownerId: Int, message: String): Boolean {
         if (!comments[commentId].deleted && !notes[comments[commentId].noteId].deleted) {
             comments += comments[commentId].copy(ownerId = ownerId, message = message)
@@ -71,8 +64,7 @@ object NotesService {
         return false
     }
 
-    //Тут вроде ок
-    fun noteGet(userId: Int, count: Int, sort: Boolean): Any {
+    fun notesGet(userId: Int, count: Int, sort: Boolean): Any {
         var noteTemp = mutableListOf<Note>()
         var itemCount = 0
         for (item in notes) {
@@ -90,8 +82,7 @@ object NotesService {
         return noteTemp
     }
 
-    //Тут вроде ок
-    fun noteGetById(noteId: Int): Any {
+    fun notesGetById(noteId: Int): Any {
         var noteTemp = mutableListOf<Note>()
         for (item in notes) {
             if (item.id == noteId && !item.deleted) {
@@ -101,7 +92,7 @@ object NotesService {
         return noteTemp
     }
 
-    fun commentsGet(noteId: Int, ownerId: Int, sort: Boolean, count: Int): Any {
+    fun commentsGet(noteId: Int, sort: Boolean, count: Int): Any {
         var commentTemp = mutableListOf<Comment>()
         var itemCount = 0
         for (item in comments) {
@@ -117,6 +108,16 @@ object NotesService {
             }
         }
         return commentTemp
+    }
+
+    fun commentsRestore(commentId: Int): Boolean {
+        if (comments[commentId].deleted && !notes[comments[commentId].noteId].deleted) {
+            comments += comments[commentId].copy(deleted = false)
+            comments.removeAt(commentId)
+            return true
+        }
+        return false
+
     }
 }
 

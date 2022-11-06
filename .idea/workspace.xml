@@ -4,9 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="327f5fe6-4a09-44bb-ba5c-6230f0933ff1" name="Changes" comment="Add fun notesEdit, commentsEdit, noteGet">
+    <list default="true" id="327f5fe6-4a09-44bb-ba5c-6230f0933ff1" name="Changes" comment="Add fun noteGetById, commentsGet">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/Comment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Comment.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/Main.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Main.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/Note.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Note.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/NotesService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/NotesService.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -45,7 +47,14 @@
     "last_opened_file_path": "E:/netology/Kotlin/NoteService"
   }
 }]]></component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Kotlin.MainKt (1)">
+    <configuration name="MainKt (1)" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="ru.netology.MainKt" />
+      <module name="NoteService.main" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="MainKt" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="MainKt" />
       <module name="NoteService.main" />
@@ -55,6 +64,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Kotlin.MainKt (1)" />
         <item itemvalue="Kotlin.MainKt" />
       </list>
     </recent_temporary>
@@ -103,7 +113,14 @@
       <option name="project" value="LOCAL" />
       <updated>1667753029847</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Add fun noteGetById, commentsGet">
+      <created>1667754925266</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1667754925266</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -123,6 +140,7 @@
     <MESSAGE value="Add fun addNote, createComment, notesDelete" />
     <MESSAGE value="Edit all fun notesAdd, createComment, notesDelete; added commentDelete" />
     <MESSAGE value="Add fun notesEdit, commentsEdit, noteGet" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add fun notesEdit, commentsEdit, noteGet" />
+    <MESSAGE value="Add fun noteGetById, commentsGet" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add fun noteGetById, commentsGet" />
   </component>
 </project>

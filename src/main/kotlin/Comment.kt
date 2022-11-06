@@ -1,3 +1,4 @@
+package ru.netology
 data class Comment(
     val id: Int,
     val noteId: Int,

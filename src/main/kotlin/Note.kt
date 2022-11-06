@@ -1,3 +1,4 @@
+package ru.netology
 data class Note(
     val id: Int,
     val date: Long,
