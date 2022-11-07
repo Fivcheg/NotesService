@@ -3,11 +3,16 @@ import java.util.*
 import javax.crypto.KeyGenerator
 
 object NotesService {
-    var notes = mutableListOf<Note>()  //TODO PRIVATE / OPEN FOR TESTING
-    var comments = mutableListOf<Comment>() //TODO PRIVATE / OPEN FOR TESTING
+    private var notes = mutableListOf<Note>()
+    private var comments = mutableListOf<Comment>()
+
+    fun clear() {
+        notes = mutableListOf<Note>()
+        comments = mutableListOf<Comment>()
+    }
 
     fun notesAdd(note: Note): Int {
-        var newId = notes.size
+        val newId = notes.size
         notes += note.copy(id = newId)
         if (newId == notes.last().id) {
             return notes.last().id
@@ -15,12 +20,12 @@ object NotesService {
         return 0
     }
 
-    fun commentsCreate(postId: Int, comment: Comment): Boolean {
-        val secretKey = KeyGenerator.getInstance("AES").generateKey()
-        val encodedKey: String = Base64.getEncoder().encodeToString(secretKey.encoded)
-        if (!notes[postId].deleted) {
-            var commentId = comments.size
-            comments += comment.copy(id = commentId++, noteId = postId, quid = encodedKey)
+    fun commentsCreate(noteId: Int, comment: Comment): Boolean {
+        if (notes.contains(element = notes[noteId]) && !notes[noteId].deleted) {
+            val secretKey = KeyGenerator.getInstance("AES").generateKey()
+            val encodedKey: String = Base64.getEncoder().encodeToString(secretKey.encoded)
+            val commentId = comments.size
+            comments += comment.copy(id = commentId, noteId = noteId, quid = encodedKey)
             if (commentId == comments.last().id) {
                 return true
             }
@@ -29,37 +34,58 @@ object NotesService {
     }
 
     fun notesDelete(noteId: Int): Boolean {
-        if (!notes[noteId].deleted) {
-            notes += notes[noteId].copy(deleted = true)
-            notes.removeAt(notes[noteId].id)
-            return true
+        try {
+            if (notes.contains(element = notes[noteId]) && !notes[noteId].deleted) {
+                notes += notes[noteId].copy(deleted = true)
+                notes.removeAt(notes[noteId].id)
+                return true
+            }
+        } catch (e: IndexOutOfBoundsException) {
+            throw IndexOutOfBoundsException("Такой заметки не существует")
         }
         return false
     }
 
     fun commentsDelete(commentId: Int): Boolean {
-        if (!comments[commentId].deleted && !notes[comments[commentId].noteId].deleted) {
-            comments += comments[commentId].copy(deleted = true)
-            comments.removeAt(comments[commentId].id)
-            return true
+        try {
+            if (comments.contains(element = comments[commentId]) && !comments[commentId].deleted && !notes[comments[commentId].noteId].deleted) {
+                comments += comments[commentId].copy(deleted = true)
+                comments.removeAt(comments[commentId].id)
+                return true
+            }
+        } catch (e: IndexOutOfBoundsException) {
+            throw IndexOutOfBoundsException("Такого комментария не существует")
         }
         return false
     }
 
     fun notesEdit(noteId: Int, title: String, text: String, privacy: Int, commentPrivacy: Int): Boolean {
-        if (!notes[noteId].deleted) {
-            notes += notes[noteId].copy(title = title, text = text, privacy = privacy, commentPrivacy = commentPrivacy)
-            notes.removeAt(noteId)
-            return true
+        try {
+            if (notes.contains(element = notes[noteId]) && !notes[noteId].deleted) {
+                notes += notes[noteId].copy(
+                    title = title,
+                    text = text,
+                    privacy = privacy,
+                    commentPrivacy = commentPrivacy
+                )
+                notes.removeAt(noteId)
+                return true
+            }
+        } catch (e: IndexOutOfBoundsException) {
+            throw IndexOutOfBoundsException("Такой заметки не существует")
         }
         return false
     }
 
     fun commentsEdit(commentId: Int, ownerId: Int, message: String): Boolean {
-        if (!comments[commentId].deleted && !notes[comments[commentId].noteId].deleted) {
+        try {
+        if (comments.contains(element = comments[commentId]) && !comments[commentId].deleted && !notes[comments[commentId].noteId].deleted) {
             comments += comments[commentId].copy(ownerId = ownerId, message = message)
             comments.removeAt(commentId)
             return true
+        }
+        }catch (e: IndexOutOfBoundsException){
+            throw IndexOutOfBoundsException("Такого комментария не существует")
         }
         return false
     }
@@ -111,13 +137,16 @@ object NotesService {
     }
 
     fun commentsRestore(commentId: Int): Boolean {
-        if (comments[commentId].deleted && !notes[comments[commentId].noteId].deleted) {
-            comments += comments[commentId].copy(deleted = false)
-            comments.removeAt(commentId)
-            return true
+        try {
+            if (comments.contains(element = comments[commentId]) && comments[commentId].deleted && !notes[comments[commentId].noteId].deleted) {
+                comments += comments[commentId].copy(deleted = false)
+                comments.removeAt(commentId)
+                return true
+            }
+        } catch (e: IndexOutOfBoundsException) {
+            throw IndexOutOfBoundsException("Такого комментария не существует")
         }
         return false
-
     }
 }
 

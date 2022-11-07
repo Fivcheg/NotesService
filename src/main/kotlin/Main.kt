@@ -1,11 +1,10 @@
 package ru.netology
 
-import ru.netology.NotesService.comments
 import ru.netology.NotesService.commentsCreate
 import ru.netology.NotesService.commentsDelete
-import ru.netology.NotesService.notes
 import ru.netology.NotesService.notesAdd
 import ru.netology.NotesService.notesDelete
+import ru.netology.NotesService.notesGet
 import kotlin.random.Random
 
 
@@ -23,15 +22,5 @@ fun main() {
     commentsCreate(2, Comment(3, 2, 23332232, 21, 3, 23, "dasdaaaad12a", "f211231ds5", true))
     commentsCreate(2, Comment(5, 2, 23332232, 21, 3, 23, "d352asdaaaad12a", "f211ds5", true))
 
-/* for (item in comments) println(item)
- println("------")
- println(commentsDelete(0))
- for (item in comments) println(item)*/
-
-/*   println("------")
- for (item in notes) println(item)
- println("------")
- println(notesDelete(5))
- for (item in notes) println(item)*/
 
 }
